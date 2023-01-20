@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 23:13:29 by aziyani           #+#    #+#             */
-/*   Updated: 2023/01/20 14:54:22 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/01/20 23:20:32 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int ft_pow(int x, int y)
 
 // ----------------------------------------------------------
 
-int array[8];
+int array[32];
 // 76543210
 // 01000001
 /*
@@ -77,15 +77,17 @@ void handler(int a, siginfo_t *info, void *uap)
 		g = 1;
 	array[i++] = g;
 	some = 0;
-	if (i == 8)
+	if (i == 32)
 	{
 		i = 0;
 		j = 0;
-		while(j < 8)
+		while(j < 32)
 		{
 			some += (array[j]) * ft_pow(2, j);
 			j++;
 		}
+		if(some == 0)
+			kill(n, SIGUSR1);
 		write(1, &some, 1);
 	}
 }
@@ -100,7 +102,7 @@ int main()
 	ft_printf("%i\n", pid);
 	struct sigaction sa;
     sa.sa_sigaction = handler;
-    sa.sa_flags = SA_SIGINFO;
+    sa.sa_flags = 0;
     sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while(1)

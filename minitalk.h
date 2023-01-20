@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 23:13:39 by aziyani           #+#    #+#             */
-/*   Updated: 2023/01/19 18:23:47 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/01/20 23:30:24 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdarg.h>
 
 # include <stdio.h>
+# include <string.h>
 
 int	ft_printf(const char *s, ...);
 int	ft_putchar(int c);

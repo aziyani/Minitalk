@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 23:13:19 by aziyani           #+#    #+#             */
-/*   Updated: 2023/01/18 23:18:29 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/01/20 23:31:21 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	ft_atoi(const char *str)
 	return (result * signe);
 }
 // -------------------------------------------------------------------------
-void conv_t_b_send(int pid, int c)
+void conv_t_b_send(int pid, unsigned char c)
 {
     int i;
-    char s[8];
+    char s[32];
     
     i = 0;
-    while (i < 8)
+    while (i < 32)
     {
         s[i] = '0';
         i++;
@@ -54,11 +54,12 @@ void conv_t_b_send(int pid, int c)
     while (c)
     {
         s[i] = (c % 2) + 48;
+        
         c = c / 2;
         i++;
     }
     i = 0;
-    while (i < 8)
+    while (i < 32)
     {
         if (s[i] == '0')
             kill(pid, SIGUSR1);
@@ -69,6 +70,14 @@ void conv_t_b_send(int pid, int c)
     }
 }
 // ---------------------------------------------------------------------------
+
+void handler(int a)
+{
+    (void)a;
+    ft_printf("done");
+}
+
+// ---------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
     int i;
@@ -76,9 +85,10 @@ int main(int argc, char **argv)
     i = 0;
     if (argc == 3)
     {
-        while (argv[2][i])
+        signal(SIGUSR1, &handler);
+        while (i <= strlen(argv[2]))
         {
-            conv_t_b_send(ft_atoi(argv[1]), argv[2][i]);
+            conv_t_b_send(ft_atoi(argv[1]), (unsigned char)(argv[2][i]));
             i++;
         }
     }
