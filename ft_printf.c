@@ -6,13 +6,12 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:00:21 by aziyani           #+#    #+#             */
-/*   Updated: 2023/01/30 15:00:28 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/01/31 15:32:23 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-// -------------------------------------------------
 int	ft_printf(const char *s, ...)
 {
 	int		i;
@@ -28,8 +27,8 @@ int	ft_printf(const char *s, ...)
 		{
 			i += 1;
 			len = 0;
-	        if (s[i] == 'd' || s[i] == 'i')
-		        len += ft_putnbr(va_arg(ptr, int));
+			if (s[i] == 'd' || s[i] == 'i')
+				len += ft_putnbr(va_arg(ptr, int));
 		}
 		else
 			len += ft_putchar(s[i]);
@@ -38,7 +37,7 @@ int	ft_printf(const char *s, ...)
 	va_end(ptr);
 	return (len);
 }
-// -------------------------------------------------
+
 int	ft_putnbr(int n)
 {
 	int				counter;
@@ -64,10 +63,9 @@ int	ft_putnbr(int n)
 	}
 	return (counter);
 }
-// -------------------------------------------------
+
 int	ft_putchar(int c)
 {
 	write(1, &c, 1);
 	return (1);
 }
-// -------------------------------------------------

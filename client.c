@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 23:13:19 by aziyani           #+#    #+#             */
-/*   Updated: 2023/01/30 19:45:49 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/01/31 15:20:27 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ int	main(int argc, char **argv)
 	int	i;
 
 	i = 0;
+	if (ft_atoi(argv[1]) == -1)
+	{
+		write(1, "error\n", 7);
+		exit(1);
+	}
 	if (argc == 3)
 	{
 		while (argv[2][i])

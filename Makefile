@@ -1,4 +1,4 @@
-SRC = client.c 
+SRC = client.c
 SRC1 = server.c
 NAME = minitalk
 CC = cc
@@ -9,15 +9,13 @@ OBJS = $(SRCS:.c=.o)
 
 RM = rm -f
 
-%.o : %.c
-	${CC} ${CFLAGS} -c $< -o $@
 all : ${NAME}
 
 $(NAME): client server
 
-client : ${OBJS}
+client : ${SRCS} client.c
 	$(CC) $(CFLAGS) ${SRCS} client.c -o client
-server : ${OBJS} 
+server : ${SRCS} server.c
 	$(CC) $(CFLAGS) ${SRCS} server.c  -o server
 
 
@@ -25,6 +23,6 @@ clean:
 	$(RM) $(OBJS)
 
 fclean:clean
-	$(RM) $(client) $(server)
+	$(RM) client server
 
 re: fclean all
