@@ -5,35 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 23:13:29 by aziyani           #+#    #+#             */
-/*   Updated: 2023/01/21 16:39:23 by aziyani          ###   ########.fr       */
+/*   Created: 2023/01/30 18:58:00 by aziyani           #+#    #+#             */
+/*   Updated: 2023/01/31 01:34:33 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "minitalk.h"
 
-// ---------------------------------------------------------
-
-int ft_pow(int x, int y)
+int	ft_pow(int x, int y)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    j = 1;
-    i = 0;
-    while(i < y)
-    {
-        j *= x;
-        i++;
-    }
-    return (j);
+	j = 1;
+	i = 0;
+	while (i < y)
+	{
+		j *= x;
+		i++;
+	}
+	return (j);
 }
 
-// ----------------------------------------------------------
-
-int array[8];
+int	array[8];
 // 76543210
 // 01000001
 /*
@@ -45,68 +39,46 @@ int array[8];
 	pow(2, 6)
 */
 
-void handler(int a, siginfo_t *info, void *uap)
+void	handler(int a, siginfo_t *info, void *uap)
 {
-	int g;
-	static int i;
-	int some;
-	int j;
-	(void) uap;
-	static pid_t n;
-	int b;
-	
-	b = 0;
-	if(n == 0)
-		n = info->si_pid;
-	
-	if(n != info->si_pid)
-	{
-	// 	while(b < 8)
-	// 	{
-	// 		array[b] = 0;
-	// 		b++;
-	// 	}
-		i = 0;
-		n = 0;
-	}
+	static int		i;
+	int				res;
+	int				j;
+	(void)			uap;
+	static pid_t	n;
 
-	
-	if(a == SIGUSR1)
-		g = 0;
-	if(a == SIGUSR2)
-		g = 1;
-	array[i++] = g;
-	some = 0;
+	if (n != info->si_pid)
+	{
+		i = 0;
+		n = info->si_pid;
+	}
+	array[i++] = a - SIGUSR1;
+	res = 0;
 	if (i == 8)
 	{
 		i = 0;
 		j = 0;
 		while(j < 8)
 		{
-			some += (array[j]) * ft_pow(2, j);
+			res += (array[j]) * ft_pow(2, j);
 			j++;
 		}
-		// if(some == 0)
-		// 	kill(n, SIGUSR1);
-		write(1, &some, 1);
+		write(1, &res, 1);
 	}
 }
 
-// -------------------------------------------------------------
-
-int main()
+int	main()
 {
-	int pid;
+	int	pid;
 
 	pid = getpid();
 	ft_printf("%i\n", pid);
-	struct sigaction sa;
-    sa.sa_sigaction = handler;
-    sa.sa_flags = 0;
-    sigaction(SIGUSR1, &sa, NULL);
+	struct sigaction	sa;
+	sa.sa_sigaction = handler;
+	sa.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while(1)
 		pause();
 	return (0);
 }
-// --------------------------------------------------------------
