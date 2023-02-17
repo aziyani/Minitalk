@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 23:13:39 by aziyani           #+#    #+#             */
-/*   Updated: 2023/02/17 16:29:53 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/02/17 18:57:42 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <stdarg.h>
-# include <stdio.h>
 
 int	ft_printf(const char *s, ...);
 int	ft_putchar(int c);
 int	ft_putnbr(int n);
-int	check_digit(char *c);
 
 #endif

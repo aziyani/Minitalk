@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 23:13:19 by aziyani           #+#    #+#             */
-/*   Updated: 2023/02/17 22:12:40 by aziyani          ###   ########.fr       */
+/*   Created: 2023/02/17 18:39:12 by aziyani           #+#    #+#             */
+/*   Updated: 2023/02/17 20:09:58 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = (result * 10) + (str[i] - 48);
+			result = (result * 10) + (str[i] - 48);
 		i++;
 	}
 	return (result * signe);
@@ -42,7 +42,7 @@ void	ft_full(char *s)
 	int	i;
 
 	i = 0;
-	while (i < 8)
+	while (i < 32)
 	{
 		s[i] = '0';
 		i++;
@@ -52,7 +52,7 @@ void	ft_full(char *s)
 void	conv_t_b_send(int pid, unsigned char c)
 {
 	int		i;
-	char	s[8];
+	char	s[32];
 
 	i = 0;
 	ft_full(s);
@@ -63,7 +63,7 @@ void	conv_t_b_send(int pid, unsigned char c)
 		i++;
 	}
 	i = 0;
-	while (i < 8)
+	while (i < 32)
 	{
 		if (s[i] == '0')
 			kill(pid, SIGUSR1);
@@ -72,6 +72,22 @@ void	conv_t_b_send(int pid, unsigned char c)
 		usleep(100);
 		i++;
 	}
+}
+
+int ft_strlen(char *s)
+{
+    int i;
+
+    i = 0;
+    while(s[i])
+        i++;
+    return (i);
+}
+
+void handler(int a)
+{
+    (void)a;
+    usleep(100);
 }
 
 int	check_digit(char *c)
@@ -93,7 +109,7 @@ int	main(int argc, char **argv)
 	int	i;
 
 	i = 0;
-	if (argc <= 2)
+	if (argc <= 2 || ft_atoi(argv[1]) == 0)
 		return (0);
 	if (!(check_digit(argv[1])))
 		return (0);
@@ -104,11 +120,13 @@ int	main(int argc, char **argv)
 	}
 	if (argc == 3)
 	{
+		signal(SIGUSR1, &handler);
 		while (argv[2][i])
 		{
 			conv_t_b_send(ft_atoi(argv[1]), (argv[2][i]));
 			i++;
 		}
 	}
+	ft_printf("done");
 	return (0);
 }
