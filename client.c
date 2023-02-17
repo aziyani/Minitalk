@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 23:13:19 by aziyani           #+#    #+#             */
-/*   Updated: 2023/01/31 15:20:27 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/02/17 18:32:28 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,32 @@ void	conv_t_b_send(int pid, unsigned char c)
 	}
 }
 
+int	check_digit(char *c)
+{
+	int	i;
+
+	i = 0;
+	while (c[i])
+	{
+		if (c[i] < '0' || c[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	int	i;
 
 	i = 0;
+	if (argc <= 2 || ft_atoi(argv[1]) == 0)
+		return (0);
+	if (!(check_digit(argv[1])))
+		return (0);
 	if (ft_atoi(argv[1]) == -1)
 	{
-		write(1, "error\n", 7);
+		write(1, "ikhan\n", 7);
 		exit(1);
 	}
 	if (argc == 3)
